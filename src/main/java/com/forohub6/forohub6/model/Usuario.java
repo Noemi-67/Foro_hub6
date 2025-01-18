@@ -30,7 +30,7 @@ public class Usuario implements UserDetails {
     private List<Topico> topicos;
 
     // Constructors
-    public Usuario(String nombre, String email, String password) {
+    public Usuario(@Valid String nombre, String email, String password) {
         this.nombre = nombre;
         this.email = email;
         this.password = password;
