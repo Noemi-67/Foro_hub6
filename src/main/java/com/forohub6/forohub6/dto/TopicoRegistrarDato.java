@@ -4,11 +4,11 @@ import jakarta.validation.constraints.NotBlank;
 
 public record TopicoRegistrarDato(
 
-@NotBlank
+        @NotBlank
         String titulo,
-@NotBlank
+        @NotBlank
         String mensaje,
-@NotBlank
+        @NotBlank
         String curso)
 
 {

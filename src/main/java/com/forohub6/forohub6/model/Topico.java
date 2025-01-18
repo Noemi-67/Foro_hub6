@@ -2,33 +2,37 @@ package com.forohub6.forohub6.model;
 
 import com.forohub6.forohub6.dto.TopicoRegistrarDato;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
 
-@Entity(name = "Topico")
+@Entity
 @Table(name = "topico")
-@EqualsAndHashCode(of = "topicId")
 public class Topico {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "topic_id")
-    private Long topicId;
+    @Column(name = "topico_id")
+    private Long topicoId;
 
     private String titulo;
+
+    @Column(columnDefinition = "TEXT")
     private String mensaje;
+
     private boolean status;
 
     private String curso;
 
-    @Column(name = "feDeCreacion")
+    @Column(name = "feDeCreacion", nullable = false)
     private LocalDateTime feDeCreacion;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) // FetchType.LAZY optimiza las consultas
     @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario; // Assuming there's a 'Usuario' entity
+    private Usuario usuario;
 
+    // Constructors
     public Topico(String titulo, String mensaje, String curso, Usuario usuario) {
         this.titulo = titulo;
         this.mensaje = mensaje;
@@ -40,64 +44,7 @@ public class Topico {
 
     public Topico() {}
 
-    public Topico(TopicoRegistrarDato topicoRegistrarDato) {
-        // Initialize from DTO if necessary
-    }
 
-    // Getters and Setters
-    public Long getTopicId() {
-        return topicId;
-    }
-
-    public void setTopicId(Long topicId) {
-        this.topicId = topicId;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public String getMensaje() {
-        return mensaje;
-    }
-
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public String getCurso() {
-        return curso;
-    }
-
-    public void setCurso(String curso) {
-        this.curso = curso;
-    }
-
-    public LocalDateTime getFeDeCreacion() {
-        return feDeCreacion;
-    }
-
-    public void setFeDeCreacion(LocalDateTime feDeCreacion) {
-        this.feDeCreacion = feDeCreacion;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public Topico(@Valid TopicoRegistrarDato topicoRegistrarDato) {
     }
 }

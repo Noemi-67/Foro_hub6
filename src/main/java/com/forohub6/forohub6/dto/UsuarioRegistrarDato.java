@@ -10,11 +10,10 @@ public record UsuarioRegistrarDato(
 
         @NotBlank
         @Email
-       String email,
+        String email,
 
         @NotBlank
         @Valid
-       String password){
+        String password){
 
 }
-
