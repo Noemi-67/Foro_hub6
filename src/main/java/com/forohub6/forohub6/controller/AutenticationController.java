@@ -1,6 +1,9 @@
 package com.forohub6.forohub6.controller;
 
+import com.forohub6.forohub6.infra.security.DatosJWTTtoken;
+import com.forohub6.forohub6.infra.security.TokenService;
 import com.forohub6.forohub6.model.DatosAutenticacionUsuario;
+import com.forohub6.forohub6.model.Usuario;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +22,15 @@ public class AutenticationController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private TokenService tokenService;
 
     @PostMapping
     public ResponseEntity autenticarUsuario(@RequestBody @Valid DatosAutenticacionUsuario datosAutenticacionUsuario) {
-        Authentication token= new UsernamePasswordAuthenticationToken(datosAutenticacionUsuario.nombre(),
+        Authentication authToken= new UsernamePasswordAuthenticationToken(datosAutenticacionUsuario.nombre(),
                 datosAutenticacionUsuario.password());
-        authenticationManager.authenticate(token);
-        return ResponseEntity.ok().build();
+        var usuarioAutenticado = authenticationManager.authenticate(authToken);
+        var JWTtoken = tokenService.generarToken((Usuario) usuarioAutenticado.getPrincipal());
+        return ResponseEntity.ok(new DatosJWTTtoken(JWTtoken));
     }
 }
