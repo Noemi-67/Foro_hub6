@@ -1,4 +1,4 @@
-package com.forohub6.forohub6.infra;
+package com.forohub6.forohub6.infra.errores;
 
 
 import jakarta.persistence.EntityNotFoundException;
